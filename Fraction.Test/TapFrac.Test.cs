@@ -9,13 +9,23 @@ namespace Fraction.Test
 {
     [TestFixture]
     public class TapFrac{
+        private static readonly Fraction F1 = new Fraction(1, 2);
+        private static readonly Fraction F2 = new Fraction(1, 6);
+        private readonly Fraction _f3 = F1 * F2;
+
+
         [Test]
-        public void moltTest(){
-            Fraction F1 = new Fraction(1, 2);
-            Fraction F2 = new Fraction(1, 6);
-            Fraction F3 = F1 * F2;
-            Assert.That(F3.num, Is.EqualTo(1));
-            Assert.That(F3.den, Is.EqualTo(12));
+        public void Moltip(){
+            Assert.That(_f3.num, Is.EqualTo(1));
+            Assert.That(_f3.den, Is.EqualTo(12));
         }
+
+
+        [Test]
+        public void Eq()
+        {
+            Assert.That(F1.Equals(new Fraction(1,2)),Is.EqualTo(true));
+        }
+
     }
 }
