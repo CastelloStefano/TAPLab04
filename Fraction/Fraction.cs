@@ -18,7 +18,7 @@ namespace Fraction
                 den *= -1;
                 num *= -1;
             }
-            for (int i = Math.Min(num, den); i > 1; i--){
+            for (int i = Math.Max(num, den); i > 1; i--){
                 if (num % i == 0 && den % i == 0){
                     num /= i;
                     den /= i;

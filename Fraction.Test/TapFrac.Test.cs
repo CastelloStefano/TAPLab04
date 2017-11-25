@@ -32,58 +32,49 @@ la conversione esplicita di 42/11 sollevi un'eccezione
     [TestFixture]
     public class TapFrac
     {
-
-        private Fraction F1, F2, _f3, _f4, _f5, _f6;
+        private Fraction _f1, _f2, _f3, _f4, _f5, _f6;
 
         [SetUp]
-        protected void SetUp()
-        {
-            F1 = new Fraction(1, 2);
-            F2 = new Fraction(1, 6);
-            _f3 = F1 * F2; // [1/12]
-            _f4 = F1 + F2; // [2/3]
-            _f5 = F1 - F2; // [1/3]
-            _f6 = F1 / F2; // [3/1]:[3]
-  
-    }
-       
-
-
+        protected void SetUp(){
+            _f1 = new Fraction(1, 2);
+            _f2 = new Fraction(1, 6);
+            _f3 = _f1 * _f2; // [1/12]
+            _f4 = _f1 + _f2; // [2/3]
+            _f5 = _f1 - _f2; // [1/3]
+            _f6 = _f1 / _f2; // [3/1]:[3]
+        }
 
         //costruire una frazione col denominatore uguale a zero sollevi un'eccezione
         [Test]
         //[ExpectedException(typeof(DivideByZeroException))]
-        public void NotZeroDen()
-        {
+        public void NotZeroDen(){
             //Fraction f = new Fraction(1, 0);
             Assert.That(() => new Fraction(1,0), Throws.TypeOf(typeof(DivideByZeroException)));
 
         }
 
-        [Test]
-        public void Eq(){
-            Assert.That(F1.Equals(new Fraction(1,2)),Is.EqualTo(true));
-            Assert.That(F2.Equals(new Fraction(1, 6)), Is.EqualTo(true));
+        [TestCase(1,2)]
+        public void Eq(int n, int d){
+            Assert.That(_f1.Equals(new Fraction(n,d)),Is.EqualTo(true));
+        }
+
+        [TestCase(2,5,10)]
+        [TestCase(2,3,6)]
+        [TestCase(2,4,4)]
+        public void Mcm(int n, int d, int res){
+            Assert.That(Fraction.Mcm(n,d), Is.EqualTo(res));
         }
 
         [Test]
-        public void Mcm()
-        {
-            Assert.That(Fraction.Mcm(2,5), Is.EqualTo(10));
-            Assert.That(Fraction.Mcm(2, 3), Is.EqualTo(6));
-            Assert.That(Fraction.Mcm(2, 4), Is.EqualTo(4));
-        }
-        [Test]
-        public void Sub()
-        {
+        public void Sub(){
             Assert.That(_f5.Equals(new Fraction(1,3)));
         }
 
         [Test]
-        public void Div()
-        {
+        public void Div(){
             Assert.That(_f6, Is.EqualTo(new Fraction(3,1)));
         }
+
         [Test]
         public void Sum(){
             Assert.That(_f4.Equals(new Fraction(2,3)));
@@ -94,13 +85,12 @@ la conversione esplicita di 42/11 sollevi un'eccezione
             Assert.That(_f3, Is.EqualTo(new Fraction(1, 12)));
         }
 
-        [Test]
-        public void Print_Tostring()
-        {
-            Assert.That(new Fraction(12,2).ToString(), Is.EqualTo("6"));
-            Assert.That(new Fraction(12, 5).ToString(), Is.EqualTo("12/5"));
-            Assert.That(new Fraction(24, 10).ToString(), Is.EqualTo("12/5"));
+        [TestCase(12,2,"6")]
+        [TestCase(12, 5, "12/5")]
+        [TestCase(24, 10, "12/5")]
+        [TestCase(22, -11, "-2")]
+        public void Print_Tostring(int n, int d, string r){
+            Assert.That(new Fraction(n,d).ToString(), Is.EqualTo(r));
         }
-
     }
 }
