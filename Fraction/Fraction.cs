@@ -7,7 +7,13 @@ namespace Fraction
         public readonly int Den;
         public readonly int Num;
 
-        public Fraction(int num, int den){
+        public Fraction(int num, int den)
+        {
+            if (den == 0)
+            {
+                throw new DivideByZeroException();
+            }
+
             if (den < 0){
                 den *= -1;
                 num *= -1;
@@ -37,6 +43,29 @@ namespace Fraction
         public static Fraction operator +(Fraction f1, Fraction f2){
             int mcm = Mcm(f1.Den, f2.Den);
             return new Fraction(((mcm/f1.Den)*f1.Num)+((mcm / f2.Den) * f2.Num),mcm);
+        }
+
+        public static Fraction operator -(Fraction f1, Fraction f2)
+        {
+            int mcm = Mcm(f1.Den, f2.Den);
+            return new Fraction(((mcm / f1.Den) * f1.Num) - ((mcm / f2.Den) * f2.Num), mcm);
+        }
+
+        public static Fraction operator /(Fraction f1, Fraction f2)
+        {
+            if (f2.Num != 0)
+            {
+                int den = f2.Num;
+                int num = f2.Den;
+                return new Fraction(f1.Num * num, f1.Den * den);
+            }
+            throw new DivideByZeroException();
+        }
+
+        public override string ToString()
+        {
+            if (Den == 1) return Num.ToString();
+            return Num+"/"+Den;
         }
 
         public override bool Equals(object obj){
