@@ -10,11 +10,6 @@ namespace Fraction.Test
         private readonly Fraction _f4 = F1 + F2; // [2/3]
 
         [Test]
-        public void Moltip(){
-            Assert.That(_f3, Is.EqualTo(new Fraction(1, 12)));
-        }
-
-        [Test]
         public void Eq(){
             Assert.That(F1.Equals(new Fraction(1,2)),Is.EqualTo(true));
             Assert.That(F2.Equals(new Fraction(1, 6)), Is.EqualTo(true));
@@ -33,6 +28,10 @@ namespace Fraction.Test
             Assert.That(_f4.Equals(new Fraction(2,3)));
         }
 
+        [Test]
+        public void Moltip(){
+            Assert.That(_f3, Is.EqualTo(new Fraction(1, 12)));
+        }
 
     }
 }
