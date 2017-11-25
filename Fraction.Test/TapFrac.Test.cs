@@ -30,23 +30,34 @@ la conversione esplicita di 42/11 sollevi un'eccezione
 
 
     [TestFixture]
-    public class TapFrac{
-        private static readonly Fraction F1 = new Fraction(1, 2);
-        private static readonly Fraction F2 = new Fraction(1, 6);
-        private readonly Fraction _f3 = F1 * F2; // [1/12]
-        private readonly Fraction _f4 = F1 + F2; // [2/3]
-        private readonly Fraction _f5 = F1 - F2; // [1/3]
-        private readonly Fraction _f6 = F1 / F2; // [3/1]:[3]
+    public class TapFrac
+    {
+
+        private Fraction F1, F2, _f3, _f4, _f5, _f6;
+
+        [SetUp]
+        protected void SetUp()
+        {
+            F1 = new Fraction(1, 2);
+            F2 = new Fraction(1, 6);
+            _f3 = F1 * F2; // [1/12]
+            _f4 = F1 + F2; // [2/3]
+            _f5 = F1 - F2; // [1/3]
+            _f6 = F1 / F2; // [3/1]:[3]
+  
+    }
+       
 
 
 
         //costruire una frazione col denominatore uguale a zero sollevi un'eccezione
-
         [Test]
-        [ExpectedException(typeof(DivideByZeroException))]
+        //[ExpectedException(typeof(DivideByZeroException))]
         public void NotZeroDen()
         {
-                Fraction f = new Fraction(1, 0);
+            //Fraction f = new Fraction(1, 0);
+            Assert.That(() => new Fraction(1,0), Throws.TypeOf(typeof(DivideByZeroException)));
+
         }
 
         [Test]
