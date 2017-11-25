@@ -28,7 +28,7 @@ la conversione esplicita di 42/11 sollevi un'eccezione
     [TestFixture]
     public class TapFrac
     {
-        private Fraction _f1, _f2, _f3, _f4, _f5, _f6;
+        private Fraction _f1, _f2, _f3, _f4, _f5;
 
         [SetUp]
         protected void SetUp(){
@@ -37,7 +37,6 @@ la conversione esplicita di 42/11 sollevi un'eccezione
             _f3 = _f1 * _f2; // [1/12]
             _f4 = _f1 + _f2; // [2/3]
             _f5 = _f1 - _f2; // [1/3]
-            _f6 = _f1 / _f2; // [3/1]:[3]
         }
 
         //costruire una frazione col denominatore uguale a zero sollevi un'eccezione
