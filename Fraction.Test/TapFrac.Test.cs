@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
@@ -9,7 +7,7 @@ namespace Fraction.Test
     [TestFixture]
     public class TapFrac
     {
-        private Fraction _f1, _f2, _f3, _f4, _f5, _f6;
+        private Fraction _f1, _f2, _f3, _f4, _f5;
 
         [SetUp]
         protected void SetUp(){
@@ -18,7 +16,6 @@ namespace Fraction.Test
             _f3 = _f1 * _f2; // [1/12]
             _f4 = _f1 + _f2; // [2/3]
             _f5 = _f1 - _f2; // [1/3]
-            _f6 = _f1 / _f2; // [3/1]:[3]
         }
 
         [TearDown]
@@ -88,9 +85,9 @@ namespace Fraction.Test
             Assert.That(_f5.Equals(new Fraction(1,3)));
         }
 
-        [Test]
-        public void Div(){
-            Assert.That(_f6, Is.EqualTo(new Fraction(3,1)));
+        [TestCase(33,42,111,8,44,777)]
+        public void Div(int n1,int d1,int n2,int d2,int n3,int d3){
+            Assert.That(new Fraction(n1,d1)/new Fraction(n2,d2), Is.EqualTo(new Fraction(n3,d3)));
         }
 
         [Test]
