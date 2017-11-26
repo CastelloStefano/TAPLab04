@@ -20,7 +20,7 @@ namespace Fraction.Test
 
         [TearDown]
         protected void TearDown(){
-            _f1 =_f2 = _f3 = _f4 = _f5 =_f6 = null; 
+            _f1 =_f2 = _f3 = _f4 = _f5 = null; 
         }
 
         [TestCase(12)]
@@ -40,7 +40,7 @@ namespace Fraction.Test
             Assert.That(i, Is.EqualTo(n));
         }
 
-        [Test,ExpectedException(typeof(ArithmeticException))]
+        [Test]
         public void WrongConv()
         {
             Assert.That(() => (int) new Fraction(3,5),Throws.TypeOf<ArithmeticException>());
