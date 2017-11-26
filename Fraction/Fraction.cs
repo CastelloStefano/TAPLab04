@@ -10,23 +10,43 @@ namespace Fraction
         public Fraction(int num, int den)
         {
             if (den == 0)
-            {
                 throw new DivideByZeroException();
-            }
 
-            if (den < 0){
+            if (den < 0)
+            {
                 den *= -1;
                 num *= -1;
             }
-            for (int i = Math.Max(num, den); i > 1; i--){
-                if (num % i == 0 && den % i == 0){
+            for (int i = Math.Max(num, den); i > 1; i--)
+            {
+                if (num % i == 0 && den % i == 0)
+                {
                     num /= i;
                     den /= i;
                 }
             }
             Den = den;
             Num = num;
+            
         }
+
+        public Fraction(int n){
+            Den = 1;
+            Num = n;
+        }
+
+        public static implicit operator Fraction(int i)
+        {
+            return new Fraction(i);
+        }
+
+        public static explicit operator int(Fraction f)
+        {
+            if (f.Den == 1) return f.Num;
+            throw new ArithmeticException();
+        }
+
+
 
         public static int Mcm(int n, int d){
             if (n != d){
@@ -73,7 +93,8 @@ namespace Fraction
                 return false;
             }
             var tmp = (Fraction)obj;
-            return tmp.Den == this.Den && tmp.Num == this.Num;
+            if (Num == 0 && tmp.Num == 0) return true;
+            return tmp.Den == Den && tmp.Num == Num;
         }
 
         public override int GetHashCode(){

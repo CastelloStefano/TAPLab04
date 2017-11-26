@@ -1,34 +1,11 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Assert = NUnit.Framework.Assert;
 
 namespace Fraction.Test
 {
-
-    /*TODO Test che verifica che:
-     * Test che verifica che:
-
-costruire un oggetto con numeratore=2 e denominatore=4 produca una frazione il cui numeratore è 1 e denominatore 2 (in altre parole, verificare che la frazione venga normalizzata)
-costruire un oggetto con numeratore=1 e denominatore=-1 produca una frazione il cui numeratore è -1 e denominatore=1
-sommare 1/2 e 2/5 produca 9/10
-sottrarre 33/7 da 4 produca -5/7
-moltiplicare 1/11 e 11 produca 1
-dividere 33/42 per 111/8 produca 44/777
-moltiplicare 42/1 per 0 produca 0
-dividere 42/1 per 0 sollevi un'eccezione
-0/1 sia uguale a 0/22
-1/2 sia uguale a 2/4
-la rappresentazione in stringa di 11/5 sia "11/5"
-la rappresentazione in stringa di 22/11 sia "2"
-la rappresentazione in stringa di 22/-11 sia "-2"
-l'intero 42 sia implicitamente convertibile in 42/1
-l'intero 0 sia implicitamente convertibile in 0/1
-la conversione esplicita di 42/1 abbia successo e restituisca l'intero 42
-la conversione esplicita di 42/11 sollevi un'eccezione
-*/
-
-
     [TestFixture]
     public class TapFrac
     {
@@ -44,18 +21,59 @@ la conversione esplicita di 42/11 sollevi un'eccezione
             _f6 = _f1 / _f2; // [3/1]:[3]
         }
 
-        //costruire una frazione col denominatore uguale a zero sollevi un'eccezione
+        [TearDown]
+        protected void TearDown(){
+            _f1 =_f2 = _f3 = _f4 = _f5 =_f6 = null; 
+        }
+
+        [TestCase(12)]
+        [TestCase(15)]
+        [TestCase(0)]
+        public void ImplConv(int num)
+        {
+            Fraction f = num;
+            Assert.That(f,Is.EqualTo(new Fraction(num,1)));
+        }
+
+        [TestCase(20)]
+        [TestCase(10)]
+        public void ExplConv(int n)
+        {
+            int i = (int) new Fraction(n);
+            Assert.That(i, Is.EqualTo(n));
+        }
+
+        [Test,ExpectedException(typeof(ArithmeticException))]
+        public void WrongConv()
+        {
+            Assert.That(() => (int) new Fraction(3,5),Throws.TypeOf<ArithmeticException>());
+        }
+
         [Test]
         //[ExpectedException(typeof(DivideByZeroException))]
         public void NotZeroDen(){
             //Fraction f = new Fraction(1, 0);
             Assert.That(() => new Fraction(1,0), Throws.TypeOf(typeof(DivideByZeroException)));
-
+        }
+        
+        [TestCase(2, 4, 1, 2)]
+        [TestCase(1, -1, -1, 1)]
+        public void Normaliz(int n1, int d1, int n2, int d2){ 
+            Assert.That(new Fraction(n1, d1), Is.EqualTo(new Fraction(n2,d2)));
         }
 
-        [TestCase(1,2)]
-        public void Eq(int n, int d){
-            Assert.That(_f1.Equals(new Fraction(n,d)),Is.EqualTo(true));
+        [TestCase(2,2,1)]
+        [TestCase(4,4,1)]
+        [TestCase(-3,-3,1)]
+        public void NoDen(int n1, int n2, int d2)
+        {
+            Assert.That(new Fraction(n1), Is.EqualTo(new Fraction(n2, d2)));
+        }
+
+        [TestCase(1,2,20,40)]
+        [TestCase(0,1,0,23)]
+        public void Eq(int n1, int d1, int n2, int d2){
+            Assert.That(new Fraction(n1,d1).Equals(new Fraction(n2,d2)));
         }
 
         [TestCase(2,5,10)]
