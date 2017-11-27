@@ -47,9 +47,7 @@ namespace Fraction.Test
         }
 
         [Test]
-        //[ExpectedException(typeof(DivideByZeroException))]
         public void NotZeroDen(){
-            //Fraction f = new Fraction(1, 0);
             Assert.That(() => new Fraction(1,0), Throws.TypeOf(typeof(DivideByZeroException)));
         }
         
