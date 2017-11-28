@@ -50,7 +50,13 @@ namespace Fraction.Test
         public void NotZeroDen(){
             Assert.That(() => new Fraction(1,0), Throws.TypeOf(typeof(DivideByZeroException)));
         }
-        
+
+        [Test]
+        public void NotZeroDenDiv()
+        {
+            Assert.That(() => new Fraction(1, 10)/new Fraction(0,3), Throws.TypeOf(typeof(DivideByZeroException)));
+        }
+
         [TestCase(2, 4, 1, 2)]
         [TestCase(1, -1, -1, 1)]
         public void Normaliz(int n1, int d1, int n2, int d2){ 

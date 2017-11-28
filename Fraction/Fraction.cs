@@ -46,14 +46,11 @@ namespace Fraction
             throw new ArithmeticException();
         }
 
-
-
         public static int Mcm(int n, int d){
             if (n != d){
                 for (int i = 2; i <= (n * d); i++) {
                     if (i % n == 0 && i % d == 0) return i;
                 }
-                return  (n * d);
             }
             return n;
         }
